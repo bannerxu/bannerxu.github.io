@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>基于Docker实现MySQL8主从复制 | banner の blog</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    <link rel="icon" href="/img/logo.png">
+    <script charset="utf-8" src="/js/a.js"></script>
+    <meta name="description" content="不要在该奋斗的年纪选择安逸">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="keywords" content="blog,java,开发,教程,bannerxu,banner の blog">
+    
+    <link rel="preload" href="/assets/css/0.styles.7a38ff56.css" as="style"><link rel="preload" href="/assets/js/app.bc6c5d67.js" as="script"><link rel="preload" href="/assets/js/3.a456f2bd.js" as="script"><link rel="preload" href="/assets/js/2.cf00b186.js" as="script"><link rel="preload" href="/assets/js/1.47b6a218.js" as="script"><link rel="preload" href="/assets/js/119.2b9f37fa.js" as="script"><link rel="prefetch" href="/assets/js/10.20bc9341.js"><link rel="prefetch" href="/assets/js/100.34269883.js"><link rel="prefetch" href="/assets/js/101.aeb3fcb9.js"><link rel="prefetch" href="/assets/js/102.0fe7d3ec.js"><link rel="prefetch" href="/assets/js/103.1fe73087.js"><link rel="prefetch" href="/assets/js/104.06b97ffd.js"><link rel="prefetch" href="/assets/js/105.91ac2350.js"><link rel="prefetch" href="/assets/js/106.143abb9c.js"><link rel="prefetch" href="/assets/js/107.d4bebff8.js"><link rel="prefetch" href="/assets/js/108.0477c2d3.js"><link rel="prefetch" href="/assets/js/109.5236242e.js"><link rel="prefetch" href="/assets/js/110.95fb4e71.js"><link rel="prefetch" href="/assets/js/111.ebb939df.js"><link rel="prefetch" href="/assets/js/112.b2b78a7f.js"><link rel="prefetch" href="/assets/js/113.149b8840.js"><link rel="prefetch" href="/assets/js/114.ab6c6fda.js"><link rel="prefetch" href="/assets/js/115.0f0d7ee1.js"><link rel="prefetch" href="/assets/js/116.09a1516a.js"><link rel="prefetch" href="/assets/js/117.b09d2db7.js"><link rel="prefetch" href="/assets/js/118.c7af8c4b.js"><link rel="prefetch" href="/assets/js/120.2903c68f.js"><link rel="prefetch" href="/assets/js/121.f9002742.js"><link rel="prefetch" href="/assets/js/122.bcef1b90.js"><link rel="prefetch" href="/assets/js/123.6a752a0d.js"><link rel="prefetch" href="/assets/js/124.505d0e9e.js"><link rel="prefetch" href="/assets/js/125.4e9233c2.js"><link rel="prefetch" href="/assets/js/126.363ea7f1.js"><link rel="prefetch" href="/assets/js/13.6878694d.js"><link rel="prefetch" href="/assets/js/14.6d9fcfc4.js"><link rel="prefetch" href="/assets/js/15.34d8559d.js"><link rel="prefetch" href="/assets/js/16.ba04a9ec.js"><link rel="prefetch" href="/assets/js/17.1847ba81.js"><link rel="prefetch" href="/assets/js/18.dd9d6e0b.js"><link rel="prefetch" href="/assets/js/19.e3b20b84.js"><link rel="prefetch" href="/assets/js/20.8a7bcf6a.js"><link rel="prefetch" href="/assets/js/21.0c1fd697.js"><link rel="prefetch" href="/assets/js/22.c9bd8a17.js"><link rel="prefetch" href="/assets/js/23.835aed3f.js"><link rel="prefetch" href="/assets/js/24.080971d9.js"><link rel="prefetch" href="/assets/js/25.0528c674.js"><link rel="prefetch" href="/assets/js/26.9060164c.js"><link rel="prefetch" href="/assets/js/27.77ac549f.js"><link rel="prefetch" href="/assets/js/28.00bc8f47.js"><link rel="prefetch" href="/assets/js/29.97cf9cfc.js"><link rel="prefetch" href="/assets/js/30.701ca964.js"><link rel="prefetch" href="/assets/js/31.eae39d72.js"><link rel="prefetch" href="/assets/js/32.aace529a.js"><link rel="prefetch" href="/assets/js/33.8b83ae59.js"><link rel="prefetch" href="/assets/js/34.af82ce09.js"><link rel="prefetch" href="/assets/js/35.36b65ab0.js"><link rel="prefetch" href="/assets/js/36.771a242a.js"><link rel="prefetch" href="/assets/js/37.bf247f60.js"><link rel="prefetch" href="/assets/js/38.b1172be9.js"><link rel="prefetch" href="/assets/js/39.ece9b754.js"><link rel="prefetch" href="/assets/js/4.51aa7a44.js"><link rel="prefetch" href="/assets/js/40.1b4efedb.js"><link rel="prefetch" href="/assets/js/41.4529eb29.js"><link rel="prefetch" href="/assets/js/42.58e668b8.js"><link rel="prefetch" href="/assets/js/43.808738bf.js"><link rel="prefetch" href="/assets/js/44.f6f455b6.js"><link rel="prefetch" href="/assets/js/45.562d34b2.js"><link rel="prefetch" href="/assets/js/46.f8a78fe5.js"><link rel="prefetch" href="/assets/js/47.432a4e33.js"><link rel="prefetch" href="/assets/js/48.a28cb8b2.js"><link rel="prefetch" href="/assets/js/49.77399650.js"><link rel="prefetch" href="/assets/js/5.713e1257.js"><link rel="prefetch" href="/assets/js/50.c003cd65.js"><link rel="prefetch" href="/assets/js/51.3384ef2f.js"><link rel="prefetch" href="/assets/js/52.94735bdf.js"><link rel="prefetch" href="/assets/js/53.eee1705b.js"><link rel="prefetch" href="/assets/js/54.7c0d9eb9.js"><link rel="prefetch" href="/assets/js/55.27a9fa2f.js"><link rel="prefetch" href="/assets/js/56.d0ec1f63.js"><link rel="prefetch" href="/assets/js/57.8a383a47.js"><link rel="prefetch" href="/assets/js/58.8c7778d0.js"><link rel="prefetch" href="/assets/js/59.d1ea1cf7.js"><link rel="prefetch" href="/assets/js/6.7a632a43.js"><link rel="prefetch" href="/assets/js/60.15467e73.js"><link rel="prefetch" href="/assets/js/61.3cf25ddd.js"><link rel="prefetch" href="/assets/js/62.f6cfd209.js"><link rel="prefetch" href="/assets/js/63.544cf278.js"><link rel="prefetch" href="/assets/js/64.9081461f.js"><link rel="prefetch" href="/assets/js/65.691b04ae.js"><link rel="prefetch" href="/assets/js/66.efb0712c.js"><link rel="prefetch" href="/assets/js/67.83fee0e5.js"><link rel="prefetch" href="/assets/js/68.cacea8bf.js"><link rel="prefetch" href="/assets/js/69.13c28181.js"><link rel="prefetch" href="/assets/js/7.e9df25d1.js"><link rel="prefetch" href="/assets/js/70.596d17c1.js"><link rel="prefetch" href="/assets/js/71.7c007370.js"><link rel="prefetch" href="/assets/js/72.cfebe2f3.js"><link rel="prefetch" href="/assets/js/73.c860ca63.js"><link rel="prefetch" href="/assets/js/74.2017c3d5.js"><link rel="prefetch" href="/assets/js/75.2b798e05.js"><link rel="prefetch" href="/assets/js/76.495e99ad.js"><link rel="prefetch" href="/assets/js/77.a4ed9896.js"><link rel="prefetch" href="/assets/js/78.8b806223.js"><link rel="prefetch" href="/assets/js/79.2236a076.js"><link rel="prefetch" href="/assets/js/8.6697ddbf.js"><link rel="prefetch" href="/assets/js/80.f2695c70.js"><link rel="prefetch" href="/assets/js/81.a450429b.js"><link rel="prefetch" href="/assets/js/82.e0e3eef7.js"><link rel="prefetch" href="/assets/js/83.fb63f0db.js"><link rel="prefetch" href="/assets/js/84.9bb8f9b3.js"><link rel="prefetch" href="/assets/js/85.e3a8c35e.js"><link rel="prefetch" href="/assets/js/86.af2675e7.js"><link rel="prefetch" href="/assets/js/87.b14222ad.js"><link rel="prefetch" href="/assets/js/88.1bb3d30b.js"><link rel="prefetch" href="/assets/js/89.5457895f.js"><link rel="prefetch" href="/assets/js/9.17811c13.js"><link rel="prefetch" href="/assets/js/90.d9cb6a1b.js"><link rel="prefetch" href="/assets/js/91.85c6325a.js"><link rel="prefetch" href="/assets/js/92.42e8c404.js"><link rel="prefetch" href="/assets/js/93.a3936f36.js"><link rel="prefetch" href="/assets/js/94.861d122e.js"><link rel="prefetch" href="/assets/js/95.f6bc410b.js"><link rel="prefetch" href="/assets/js/96.ccc6f4a3.js"><link rel="prefetch" href="/assets/js/97.3eb55cf7.js"><link rel="prefetch" href="/assets/js/98.71442dfe.js"><link rel="prefetch" href="/assets/js/99.2975bc53.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.dd6847c6.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.7a38ff56.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-dad8a512><div data-v-dad8a512><div id="loader-wrapper" class="loading-wrapper" data-v-d48f4d20 data-v-dad8a512 data-v-dad8a512><div class="loader-main" data-v-d48f4d20><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div></div> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-64685f0e data-v-dad8a512 data-v-dad8a512><h3 class="title" style="display:none;" data-v-64685f0e data-v-64685f0e>banner の blog</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-64685f0e data-v-64685f0e><input type="password" value="" data-v-64685f0e> <span data-v-64685f0e>Konck! Knock!</span> <button data-v-64685f0e>OK</button></label> <div class="footer" style="display:none;" data-v-64685f0e data-v-64685f0e><span data-v-64685f0e><i class="iconfont reco-theme" data-v-64685f0e></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-64685f0e>vuePress-theme-reco</a></span> <span data-v-64685f0e><i class="iconfont reco-copyright" data-v-64685f0e></i> <a data-v-64685f0e><span data-v-64685f0e>banner</span>
+            
+          <span data-v-64685f0e>2017 - </span>
+          2024
+        </a></span></div></div> <div class="hide" data-v-dad8a512><header class="navbar" data-v-dad8a512><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="banner の blog" class="logo"> <span class="site-name">banner の blog</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      分类
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/SpringBoot/" class="nav-link"><i class="iconfont undefined"></i>
+  SpringBoot
+</a></li><li class="dropdown-item"><!----> <a href="/categories/爬虫/" class="nav-link"><i class="iconfont undefined"></i>
+  爬虫
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Java/" class="nav-link"><i class="iconfont undefined"></i>
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/categories/加密/" class="nav-link"><i class="iconfont undefined"></i>
+  加密
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Mac/" class="nav-link"><i class="iconfont undefined"></i>
+  Mac
+</a></li><li class="dropdown-item"><!----> <a href="/categories/设计模式/" class="nav-link"><i class="iconfont undefined"></i>
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/categories/工具/" class="nav-link"><i class="iconfont undefined"></i>
+  工具
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Docker/" class="nav-link"><i class="iconfont undefined"></i>
+  Docker
+</a></li><li class="dropdown-item"><!----> <a href="/categories/数据库/" class="nav-link"><i class="iconfont undefined"></i>
+  数据库
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Linux/" class="nav-link"><i class="iconfont undefined"></i>
+  Linux
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Spring/" class="nav-link"><i class="iconfont undefined"></i>
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/categories/elasticsearch/" class="nav-link"><i class="iconfont undefined"></i>
+  elasticsearch
+</a></li><li class="dropdown-item"><!----> <a href="/categories/nginx/" class="nav-link"><i class="iconfont undefined"></i>
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/categories/MQ/" class="nav-link"><i class="iconfont undefined"></i>
+  MQ
+</a></li><li class="dropdown-item"><!----> <a href="/categories/SpringCloudAlibaba/" class="nav-link"><i class="iconfont undefined"></i>
+  SpringCloudAlibaba
+</a></li><li class="dropdown-item"><!----> <a href="/categories/微服务/" class="nav-link"><i class="iconfont undefined"></i>
+  微服务
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间线
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-menu"></i>
+      专题
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/notes/docker/" class="nav-link"><i class="iconfont icon-Docker"></i>
+  Docker系列
+</a></li><li class="dropdown-item"><!----> <a href="/notes/springcloudalibaba/" class="nav-link"><i class="iconfont icon-bxl-spring-boot"></i>
+  SpringCloudAlibaba系列
+</a></li><li class="dropdown-item"><!----> <a href="/notes/rabbitmq/" class="nav-link"><i class="iconfont icon-rabbitmq"></i>
+  RabbitMQ系列
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-menu"></i>
+      工具箱
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>面试题</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://javaguide.cn" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  JavaGuide
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://github.com/Snailclimb/JavaGuide" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  JavaGuide-GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li><li class="dropdown-item"><h4>在线编辑</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://tinypng.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  图片压缩
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://www.json.cn/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  json格式化
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li><li class="dropdown-item"><h4>技术网站</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://spring.io/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Spring
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://docs.oracle.com/javase/8/docs/api/index.html" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Java SE API Documentation 
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://stackoverflow.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  StackOverflow
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://leetcode-cn.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  LeetCode
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://www.linuxcool.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Linux命令大全
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://www.redis.net.cn/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Redis中文网
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li><li class="dropdown-item"><h4>免费图片</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://www.pexels.com/zh-cn/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Pexels
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li><li class="dropdown-item"><h4>在线工具</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="http://ocrmaker.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  在线文字识别
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://www.bejson.com/othertools/cron/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  在线cron
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://www.dute.org/nginx-config-formatter" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Nginx格式化
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li></ul></div></div><div class="nav-item"><a href="/about/CV.html" class="nav-link"><i class="iconfont icon-huojian"></i>
+  简历
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-dad8a512></div> <aside class="sidebar" data-v-dad8a512><div class="personal-info-wrapper" data-v-ca798c94 data-v-dad8a512><img src="/img/logo.png" alt="author-avatar" class="personal-img" data-v-ca798c94> <h3 class="name" data-v-ca798c94>
+    banner
+  </h3> <div class="num" data-v-ca798c94><div data-v-ca798c94><h3 data-v-ca798c94>84</h3> <h6 data-v-ca798c94>Article</h6></div> <div data-v-ca798c94><h3 data-v-ca798c94>57</h3> <h6 data-v-ca798c94>Tag</h6></div></div> <hr data-v-ca798c94></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      分类
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/SpringBoot/" class="nav-link"><i class="iconfont undefined"></i>
+  SpringBoot
+</a></li><li class="dropdown-item"><!----> <a href="/categories/爬虫/" class="nav-link"><i class="iconfont undefined"></i>
+  爬虫
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Java/" class="nav-link"><i class="iconfont undefined"></i>
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/categories/加密/" class="nav-link"><i class="iconfont undefined"></i>
+  加密
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Mac/" class="nav-link"><i class="iconfont undefined"></i>
+  Mac
+</a></li><li class="dropdown-item"><!----> <a href="/categories/设计模式/" class="nav-link"><i class="iconfont undefined"></i>
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/categories/工具/" class="nav-link"><i class="iconfont undefined"></i>
+  工具
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Docker/" class="nav-link"><i class="iconfont undefined"></i>
+  Docker
+</a></li><li class="dropdown-item"><!----> <a href="/categories/数据库/" class="nav-link"><i class="iconfont undefined"></i>
+  数据库
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Linux/" class="nav-link"><i class="iconfont undefined"></i>
+  Linux
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Spring/" class="nav-link"><i class="iconfont undefined"></i>
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/categories/elasticsearch/" class="nav-link"><i class="iconfont undefined"></i>
+  elasticsearch
+</a></li><li class="dropdown-item"><!----> <a href="/categories/nginx/" class="nav-link"><i class="iconfont undefined"></i>
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/categories/MQ/" class="nav-link"><i class="iconfont undefined"></i>
+  MQ
+</a></li><li class="dropdown-item"><!----> <a href="/categories/SpringCloudAlibaba/" class="nav-link"><i class="iconfont undefined"></i>
+  SpringCloudAlibaba
+</a></li><li class="dropdown-item"><!----> <a href="/categories/微服务/" class="nav-link"><i class="iconfont undefined"></i>
+  微服务
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间线
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-menu"></i>
+      专题
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/notes/docker/" class="nav-link"><i class="iconfont icon-Docker"></i>
+  Docker系列
+</a></li><li class="dropdown-item"><!----> <a href="/notes/springcloudalibaba/" class="nav-link"><i class="iconfont icon-bxl-spring-boot"></i>
+  SpringCloudAlibaba系列
+</a></li><li class="dropdown-item"><!----> <a href="/notes/rabbitmq/" class="nav-link"><i class="iconfont icon-rabbitmq"></i>
+  RabbitMQ系列
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-menu"></i>
+      工具箱
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>面试题</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://javaguide.cn" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  JavaGuide
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://github.com/Snailclimb/JavaGuide" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  JavaGuide-GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li><li class="dropdown-item"><h4>在线编辑</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://tinypng.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  图片压缩
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://www.json.cn/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  json格式化
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li><li class="dropdown-item"><h4>技术网站</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://spring.io/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Spring
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://docs.oracle.com/javase/8/docs/api/index.html" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Java SE API Documentation 
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://stackoverflow.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  StackOverflow
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://leetcode-cn.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  LeetCode
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://www.linuxcool.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Linux命令大全
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://www.redis.net.cn/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Redis中文网
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li><li class="dropdown-item"><h4>免费图片</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://www.pexels.com/zh-cn/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Pexels
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li><li class="dropdown-item"><h4>在线工具</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="http://ocrmaker.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  在线文字识别
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://www.bejson.com/othertools/cron/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  在线cron
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://www.dute.org/nginx-config-formatter" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Nginx格式化
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li></ul></div></div><div class="nav-item"><a href="/about/CV.html" class="nav-link"><i class="iconfont icon-huojian"></i>
+  简历
+</a></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-64685f0e data-v-dad8a512><h3 class="title" style="display:none;" data-v-64685f0e data-v-64685f0e>基于Docker实现MySQL8主从复制</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-64685f0e data-v-64685f0e><input type="password" value="" data-v-64685f0e> <span data-v-64685f0e>Konck! Knock!</span> <button data-v-64685f0e>OK</button></label> <div class="footer" style="display:none;" data-v-64685f0e data-v-64685f0e><span data-v-64685f0e><i class="iconfont reco-theme" data-v-64685f0e></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-64685f0e>vuePress-theme-reco</a></span> <span data-v-64685f0e><i class="iconfont reco-copyright" data-v-64685f0e></i> <a data-v-64685f0e><span data-v-64685f0e>banner</span>
+            
+          <span data-v-64685f0e>2017 - </span>
+          2024
+        </a></span></div></div> <div data-v-dad8a512><main class="page"><div class="page-title" style="display:none;"><h1>基于Docker实现MySQL8主从复制</h1> <hr> <div data-v-aa64b9d0><i class="iconfont reco-account" data-v-aa64b9d0><span data-v-aa64b9d0>banner</span></i> <i class="iconfont reco-date" data-v-aa64b9d0><span data-v-aa64b9d0>2023-03-06 11:05:24</span></i> <!----> <i class="iconfont reco-tag tags" data-v-aa64b9d0><span class="tag-item" data-v-aa64b9d0>gitlab</span></i></div></div> <div class="theme-reco-content content__default" style="display:none;"><h2 id="基于docker产生两个mysql实例"><a href="#基于docker产生两个mysql实例" class="header-anchor">#</a> 基于Docker产生两个MySQL实例</h2> <h3 id="docker-compose-yml"><a href="#docker-compose-yml" class="header-anchor">#</a> <strong>docker-compose.yml</strong></h3> <div class="language-dockerfile line-numbers-mode"><pre class="language-dockerfile"><code>version: '3'
+services:
+  mysql-master:
+    container_name: mysql-master
+    image: mysql
+    restart: always
+    ports:
+      - 3340:3306
+    privileged: true
+    volumes:
+      - $PWD/mysql-master/log:/var/log/mysql
+      - $PWD/mysql-master/conf/my.cnf:/etc/mysql/my.cnf
+      - $PWD/mysql-master/data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: &quot;123456&quot;
+    command: [
+      '--character-set-server=utf8mb4',
+      '--collation-server=utf8mb4_general_ci',
+      '--max_connections=3000'
+    ]
+    networks:
+      - mysqlMS
+
+  mysql-slave:
+    container_name: mysql-slave
+    image: mysql
+    restart: always
+    ports:
+      - 3341:3306
+    privileged: true
+    volumes:
+      - $PWD/mysql-slave/log:/var/log/mysql
+      - $PWD/mysql-slave/conf/my.cnf:/etc/mysql/my.cnf
+      - $PWD/mysql-slave/data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: &quot;123456&quot;
+    command: [
+      '--character-set-server=utf8mb4',
+      '--collation-server=utf8mb4_general_ci',
+      '--max_connections=3000'
+    ]
+    networks:
+      - mysqlMS
+
+networks:
+  mysqlMS:
+    driver: bridge
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br></div></div><h3 id="vim-mysql-master-conf-my-cnf"><a href="#vim-mysql-master-conf-my-cnf" class="header-anchor">#</a> <strong><code>vim /mysql-master/conf/my.cnf</code></strong></h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>[mysqld]
+# [必须]服务器唯一ID，默认是1，一般取IP最后一段
+server-id=1
+
+# [必须]启用二进制日志
+log-bin=mysql-bin 
+
+# 复制过滤：也就是指定哪个数据库不用同步（mysql库一般不同步）
+binlog-ignore-db=mysql
+
+# 设置需要同步的数据库 binlog_do_db = 数据库名； 
+# 如果是多个同步库，就以此格式另写几行即可。
+# 如果不指明对某个具体库同步，表示同步所有库。除了binlog-ignore-db设置的忽略的库
+# binlog_do_db = test #需要同步test数据库。
+
+# 确保binlog日志写入后与硬盘同步
+sync_binlog = 1
+
+# 跳过所有的错误，继续执行复制操作
+slave-skip-errors = all  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><h3 id="vim-mysql-slave-conf-my-cnf"><a href="#vim-mysql-slave-conf-my-cnf" class="header-anchor">#</a> <strong><code>vim /mysql-slave/conf/my.cnf</code></strong></h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>[mysqld]
+# [必须]服务器唯一ID，默认是1，一般取IP最后一段  
+server-id=2
+
+# 如果想实现 主-从（主）-从 这样的链条式结构，需要设置：
+# log-slave-updates      只有加上它，从前一台机器上同步过来的数据才能同步到下一台机器。
+
+# 设置需要同步的数据库，主服务器上不限定数据库，在从服务器上限定replicate-do-db = 数据库名；
+# 如果不指明同步哪些库，就去掉这行，表示所有库的同步（除了ignore忽略的库）。
+# replicate-do-db = test；
+
+# 不同步test数据库 可以写多个例如 binlog-ignore-db = mysql,information_schema 
+replicate-ignore-db=mysql  
+
+## 开启二进制日志功能，以备Slave作为其它Slave的Master时使用
+log-bin=mysql-bin
+log-bin-index=mysql-bin.index
+
+## relay_log配置中继日志
+#relay_log=edu-mysql-relay-bin  
+
+## 还可以设置一个log保存周期：
+#expire_logs_days=14
+
+# 跳过所有的错误，继续执行复制操作
+slave-skip-errors = all  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br></div></div><p><strong>温馨提示</strong>：</p> <p>在主服务器上最重要的二进制日志设置是 sync_binlog，这使得mysql在每次提交事务的时候把二进制日志的内容同步到磁盘上，即使服务器崩溃也会把事件写入日志中。 sync_binlog这个参数是对于MySQL系统来说是至关重要的，他不仅影响到Binlog对MySQL所带来的性能损耗，而且还影响到MySQL中数据的完整性。</p> <p>对于<code>&quot;sync_binlog&quot;</code>参数的各种设置的说明如下：</p> <ul><li>sync_binlog=0，当事务提交之后，MySQL不做fsync之类的磁盘同步指令刷新binlog_cache中的信息到磁盘，而让Filesystem自行决定什么时候来做同步，或者cache满了之后才同步到磁盘。</li> <li>sync_binlog=n，当每进行n次事务提交之后，MySQL将进行一次fsync之类的磁盘同步指令来将binlog_cache中的数据强制写入磁盘。   在MySQL中系统默认的设置是sync_binlog=0，也就是不做任何强制性的磁盘刷新指令，这时候的性能是最好的，但是风险也是最大的。因为一旦系统Crash，在binlog_cache中的所有binlog信息都会被丢失。</li> <li>而当设置为 sync_binlog=1 的时候，是最安全但是性能损耗最大的设置。因为当设置为1的时候，即使系统Crash，也最多丢失binlog_cache中未完成的一个事务，对实际数据没有任何实质性影响。</li></ul> <h3 id="docker-compose-up-d"><a href="#docker-compose-up-d" class="header-anchor">#</a> <strong><code>docker-compose up -d</code></strong></h3> <h3 id="获取两个实例的ip"><a href="#获取两个实例的ip" class="header-anchor">#</a> 获取两个实例的IP</h3> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code> <span class="token function">docker</span> network inspect mysql-master-slave_mysqlMS
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><div class="language-json line-numbers-mode"><pre class="language-json"><code><span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+        <span class="token property">&quot;Name&quot;</span><span class="token operator">:</span> <span class="token string">&quot;mysql-master-slave_mysqlMS&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;Id&quot;</span><span class="token operator">:</span> <span class="token string">&quot;ce1cb9bc74e5676c9ff7aebe2d89f7d72c6f235780e434a9ee47d4d5b8a5e534&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;Created&quot;</span><span class="token operator">:</span> <span class="token string">&quot;2022-10-05T17:33:17.511158672Z&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;Scope&quot;</span><span class="token operator">:</span> <span class="token string">&quot;local&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;Driver&quot;</span><span class="token operator">:</span> <span class="token string">&quot;bridge&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;EnableIPv6&quot;</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;IPAM&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          ...
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;Internal&quot;</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;Attachable&quot;</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;Ingress&quot;</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;ConfigFrom&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">&quot;Network&quot;</span><span class="token operator">:</span> <span class="token string">&quot;&quot;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;ConfigOnly&quot;</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;Containers&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">&quot;6de7e22742e34d73d385d4ab864690d25de6da5db7876f55a43562da6bc51656&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">&quot;Name&quot;</span><span class="token operator">:</span> <span class="token string">&quot;mysql-master&quot;</span><span class="token punctuation">,</span>
+                <span class="token property">&quot;EndpointID&quot;</span><span class="token operator">:</span> <span class="token string">&quot;720e04502895a57bab545c136ac8a83008838337f2b2cdaafc5f3dbd1e59121d&quot;</span><span class="token punctuation">,</span>
+                <span class="token property">&quot;MacAddress&quot;</span><span class="token operator">:</span> <span class="token string">&quot;02:42:ac:13:00:03&quot;</span><span class="token punctuation">,</span>
+                <span class="token property">&quot;IPv4Address&quot;</span><span class="token operator">:</span> <span class="token string">&quot;172.19.0.3/16&quot;</span><span class="token punctuation">,</span>
+                <span class="token property">&quot;IPv6Address&quot;</span><span class="token operator">:</span> <span class="token string">&quot;&quot;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;eb1e7259d395d7c4b0ca502c70643647faf35af3987ec0621fea566fab972d29&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">&quot;Name&quot;</span><span class="token operator">:</span> <span class="token string">&quot;mysql-slave&quot;</span><span class="token punctuation">,</span>
+                <span class="token property">&quot;EndpointID&quot;</span><span class="token operator">:</span> <span class="token string">&quot;b3f6599da5d7fe08b016ac146e6d0bd9cbb501ca98c348701d93ea899324fcbf&quot;</span><span class="token punctuation">,</span>
+                <span class="token property">&quot;MacAddress&quot;</span><span class="token operator">:</span> <span class="token string">&quot;02:42:ac:13:00:02&quot;</span><span class="token punctuation">,</span>
+                <span class="token property">&quot;IPv4Address&quot;</span><span class="token operator">:</span> <span class="token string">&quot;172.19.0.2/16&quot;</span><span class="token punctuation">,</span>
+                <span class="token property">&quot;IPv6Address&quot;</span><span class="token operator">:</span> <span class="token string">&quot;&quot;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;Options&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;Labels&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">&quot;com.docker.compose.network&quot;</span><span class="token operator">:</span> <span class="token string">&quot;mysqlMS&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;com.docker.compose.project&quot;</span><span class="token operator">:</span> <span class="token string">&quot;mysql-master-slave&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;com.docker.compose.version&quot;</span><span class="token operator">:</span> <span class="token string">&quot;2.10.2&quot;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br></div></div><p><strong>mysql-master：172.19.0.3</strong></p> <p><strong>mysql-slave：172.19.0.2</strong></p> <h3 id="进入主mysql服务"><a href="#进入主mysql服务" class="header-anchor">#</a> <strong>进入主mysql服务</strong></h3> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token function">docker</span> <span class="token builtin class-name">exec</span> <span class="token parameter variable">-it</span> mysql-master <span class="token function">bash</span>
+
+mysql <span class="token parameter variable">-uroot</span> <span class="token parameter variable">-p123456</span>
+
+
+<span class="token comment"># 查看server_id 是否生效</span>
+mysql<span class="token operator">&gt;</span> show variables like <span class="token string">'%server_id%'</span><span class="token punctuation">;</span>
++----------------+-------+
+<span class="token operator">|</span> Variable_name  <span class="token operator">|</span> Value <span class="token operator">|</span>
++----------------+-------+
+<span class="token operator">|</span> server_id      <span class="token operator">|</span> <span class="token number">1</span>     <span class="token operator">|</span>
+<span class="token operator">|</span> server_id_bits <span class="token operator">|</span> <span class="token number">32</span>    <span class="token operator">|</span>
++----------------+-------+
+<span class="token number">2</span> rows <span class="token keyword">in</span> <span class="token builtin class-name">set</span> <span class="token punctuation">(</span><span class="token number">0.03</span> sec<span class="token punctuation">)</span>
+
+
+<span class="token comment"># 查看 master 信息 File 和 Position 从服务上会使用到</span>
+mysql<span class="token operator">&gt;</span> show master status<span class="token punctuation">;</span>
++------------------+----------+--------------+------------------+-------------------+
+<span class="token operator">|</span> File             <span class="token operator">|</span> Position <span class="token operator">|</span> Binlog_Do_DB <span class="token operator">|</span> Binlog_Ignore_DB <span class="token operator">|</span> Executed_Gtid_Set <span class="token operator">|</span>
++------------------+----------+--------------+------------------+-------------------+
+<span class="token operator">|</span> mysql-bin.000001 <span class="token operator">|</span>     <span class="token number">2351</span> <span class="token operator">|</span>              <span class="token operator">|</span> mysql            <span class="token operator">|</span>                   <span class="token operator">|</span>
++------------------+----------+--------------+------------------+-------------------+
+<span class="token number">1</span> row <span class="token keyword">in</span> <span class="token builtin class-name">set</span> <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
+
+<span class="token comment"># 创建一个用户，用户备份</span>
+mysql<span class="token operator">&gt;</span> create user <span class="token string">'slave'</span>@<span class="token string">'%'</span> identified with mysql_native_password by <span class="token string">'123456'</span><span class="token punctuation">;</span>
+mysql<span class="token operator">&gt;</span> grant replication slave,replication client on *.* to <span class="token string">'slave'</span>@<span class="token string">'%'</span><span class="token punctuation">;</span>
+mysql<span class="token operator">&gt;</span> flush privileges<span class="token punctuation">;</span>
+
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br></div></div><h3 id="进入从slave服务"><a href="#进入从slave服务" class="header-anchor">#</a> <strong>进入从slave服务</strong></h3> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token function">docker</span> <span class="token builtin class-name">exec</span> <span class="token parameter variable">-it</span> mysql-slave <span class="token function">bash</span>
+
+mysql <span class="token parameter variable">-uroot</span> <span class="token parameter variable">-p123456</span>
+
+<span class="token comment"># 查看server_id 是否生效</span>
+mysql<span class="token operator">&gt;</span> show variables like <span class="token string">'%server_id%'</span><span class="token punctuation">;</span>
++----------------+-------+
+<span class="token operator">|</span> Variable_name  <span class="token operator">|</span> Value <span class="token operator">|</span>
++----------------+-------+
+<span class="token operator">|</span> server_id      <span class="token operator">|</span> <span class="token number">2</span>     <span class="token operator">|</span>
+<span class="token operator">|</span> server_id_bits <span class="token operator">|</span> <span class="token number">32</span>    <span class="token operator">|</span>
++----------------+-------+
+<span class="token number">2</span> rows <span class="token keyword">in</span> <span class="token builtin class-name">set</span> <span class="token punctuation">(</span><span class="token number">0.02</span> sec<span class="token punctuation">)</span>
+
+<span class="token comment"># 连接主mysql服务 master_log_file 和 master_log_pos的值要填写主master里查出来的值</span>
+change master to <span class="token assign-left variable">master_host</span><span class="token operator">=</span><span class="token string">'172.19.0.3'</span>,master_user<span class="token operator">=</span><span class="token string">'slave'</span>,master_password<span class="token operator">=</span><span class="token string">'123456'</span>,master_port<span class="token operator">=</span><span class="token number">3306</span>,master_log_file<span class="token operator">=</span><span class="token string">'mysql-bin.000001'</span>, <span class="token assign-left variable">master_log_pos</span><span class="token operator">=</span><span class="token number">2351</span>,master_connect_retry<span class="token operator">=</span><span class="token number">30</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 启动slave</span>
+mysql<span class="token operator">&gt;</span> start slave<span class="token punctuation">;</span>
+
+<span class="token comment"># 查看状态</span>
+mysql<span class="token operator">&gt;</span> show slave status <span class="token punctuation">\</span>G<span class="token punctuation">;</span>
+*************************** <span class="token number">1</span>. row ***************************
+               Slave_IO_State: Waiting <span class="token keyword">for</span> <span class="token builtin class-name">source</span> to send event
+                  Master_Host: <span class="token number">172.19</span>.0.3
+                  Master_User: slave
+                  Master_Port: <span class="token number">3306</span>
+                Connect_Retry: <span class="token number">30</span>
+              Master_Log_File: mysql-bin.000001
+          Read_Master_Log_Pos: <span class="token number">2351</span>
+               Relay_Log_File: eb1e7259d395-relay-bin.000002
+                Relay_Log_Pos: <span class="token number">2520</span>
+        Relay_Master_Log_File: mysql-bin.000001
+             Slave_IO_Running: Yes
+            Slave_SQL_Running: Yes
+              Replicate_Do_DB: 
+          Replicate_Ignore_DB: mysql
+           Replicate_Do_Table: 
+       Replicate_Ignore_Table: 
+      Replicate_Wild_Do_Table: 
+  Replicate_Wild_Ignore_Table: 
+                   Last_Errno: <span class="token number">0</span>
+                   Last_Error: 
+                 Skip_Counter: <span class="token number">0</span>
+          Exec_Master_Log_Pos: <span class="token number">2351</span>
+              Relay_Log_Space: <span class="token number">2737</span>
+              Until_Condition: None
+               Until_Log_File: 
+                Until_Log_Pos: <span class="token number">0</span>
+           Master_SSL_Allowed: No
+           Master_SSL_CA_File: 
+           Master_SSL_CA_Path: 
+              Master_SSL_Cert: 
+            Master_SSL_Cipher: 
+               Master_SSL_Key: 
+        Seconds_Behind_Master: <span class="token number">0</span>
+Master_SSL_Verify_Server_Cert: No
+                Last_IO_Errno: <span class="token number">0</span>
+                Last_IO_Error: 
+               Last_SQL_Errno: <span class="token number">0</span>
+               Last_SQL_Error: 
+  Replicate_Ignore_Server_Ids: 
+             Master_Server_Id: <span class="token number">1</span>
+                  Master_UUID: 22da853f-44d3-11ed-ba2a-0242ac120002
+             Master_Info_File: mysql.slave_master_info
+                    SQL_Delay: <span class="token number">0</span>
+          SQL_Remaining_Delay: NULL
+      Slave_SQL_Running_State: Replica has <span class="token builtin class-name">read</span> all relay log<span class="token punctuation">;</span> waiting <span class="token keyword">for</span> <span class="token function">more</span> updates
+           Master_Retry_Count: <span class="token number">86400</span>
+                  Master_Bind: 
+      Last_IO_Error_Timestamp: 
+     Last_SQL_Error_Timestamp: 
+               Master_SSL_Crl: 
+           Master_SSL_Crlpath: 
+           Retrieved_Gtid_Set: 
+            Executed_Gtid_Set: 
+                Auto_Position: <span class="token number">0</span>
+         Replicate_Rewrite_DB: 
+                 Channel_Name: 
+           Master_TLS_Version: 
+       Master_public_key_path: 
+        Get_master_public_key: <span class="token number">0</span>
+            Network_Namespace: 
+<span class="token number">1</span> row <span class="token keyword">in</span> set, <span class="token number">1</span> warning <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
+
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br></div></div><p><strong>连接主mysql参数说明：</strong></p> <ul><li><p><strong>master_port</strong>：Master的端口号，指的是容器的端口号</p></li> <li><p><strong>master_user</strong>：用于数据同步的用户</p></li> <li><p><strong>master_password</strong>：用于同步的用户的密码</p></li> <li><p><strong>master_log_file</strong>：指定 Slave 从哪个日志文件开始复制数据，即上文中提到的 File 字段的值</p></li> <li><p><strong>master_log_pos</strong>：从哪个 Position 开始读，即上文中提到的 Position 字段的值</p></li> <li><p><strong>master_connect_retry</strong>：如果连接失败，重试的时间间隔，单位是秒，默认是60秒</p></li></ul> <h3 id="设置从服务器slave为只读模式"><a href="#设置从服务器slave为只读模式" class="header-anchor">#</a> 设置从服务器slave为只读模式</h3> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment"># 查看只读状态</span>
+SHOW VARIABLES LIKE <span class="token string">'%read_only%'</span><span class="token punctuation">;</span>
+<span class="token comment"># super权限的用户只读状态 1.只读 0：可写</span>
+SET GLOBAL <span class="token assign-left variable">super_read_only</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> 
+<span class="token comment"># 普通权限用户读状态 1.只读 0：可写</span>
+SET GLOBAL <span class="token assign-left variable">read_only</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><blockquote><p>https://www.cnblogs.com/haima/p/14341903.html</p></blockquote> <blockquote><p>https://www.cnblogs.com/wade-lt/p/9008058.html</p></blockquote> <blockquote><p>https://www.cnblogs.com/kevingrace/p/6261111.html</p></blockquote></div> <footer class="page-edit" style="display:none;"><!----> <div class="last-updated"><span class="prefix">Last Updated: </span> <span class="time">3/6/2023, 11:07:48 AM</span></div></footer> <!----> <!----> <ul class="side-bar sub-sidebar-wrapper" style="width:12rem;" data-v-40a3448a><li class="level-2" data-v-40a3448a><a href="/notes/%E5%9F%BA%E4%BA%8EDocker%E5%AE%9E%E7%8E%B0MySQL8%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6.html#基于docker产生两个mysql实例" class="sidebar-link" data-v-40a3448a>基于Docker产生两个MySQL实例</a></li><li class="level-3" data-v-40a3448a><a href="/notes/%E5%9F%BA%E4%BA%8EDocker%E5%AE%9E%E7%8E%B0MySQL8%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6.html#docker-compose-yml" class="sidebar-link" data-v-40a3448a>docker-compose.yml</a></li><li class="level-3" data-v-40a3448a><a href="/notes/%E5%9F%BA%E4%BA%8EDocker%E5%AE%9E%E7%8E%B0MySQL8%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6.html#vim-mysql-master-conf-my-cnf" class="sidebar-link" data-v-40a3448a>`vim /mysql-master/conf/my.cnf`</a></li><li class="level-3" data-v-40a3448a><a href="/notes/%E5%9F%BA%E4%BA%8EDocker%E5%AE%9E%E7%8E%B0MySQL8%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6.html#vim-mysql-slave-conf-my-cnf" class="sidebar-link" data-v-40a3448a>`vim /mysql-slave/conf/my.cnf`</a></li><li class="level-3" data-v-40a3448a><a href="/notes/%E5%9F%BA%E4%BA%8EDocker%E5%AE%9E%E7%8E%B0MySQL8%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6.html#docker-compose-up-d" class="sidebar-link" data-v-40a3448a>`docker-compose up -d`</a></li><li class="level-3" data-v-40a3448a><a href="/notes/%E5%9F%BA%E4%BA%8EDocker%E5%AE%9E%E7%8E%B0MySQL8%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6.html#获取两个实例的ip" class="sidebar-link" data-v-40a3448a>获取两个实例的IP</a></li><li class="level-3" data-v-40a3448a><a href="/notes/%E5%9F%BA%E4%BA%8EDocker%E5%AE%9E%E7%8E%B0MySQL8%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6.html#进入主mysql服务" class="sidebar-link" data-v-40a3448a>进入主mysql服务</a></li><li class="level-3" data-v-40a3448a><a href="/notes/%E5%9F%BA%E4%BA%8EDocker%E5%AE%9E%E7%8E%B0MySQL8%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6.html#进入从slave服务" class="sidebar-link" data-v-40a3448a>进入从slave服务</a></li><li class="level-3" data-v-40a3448a><a href="/notes/%E5%9F%BA%E4%BA%8EDocker%E5%AE%9E%E7%8E%B0MySQL8%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6.html#设置从服务器slave为只读模式" class="sidebar-link" data-v-40a3448a>设置从服务器slave为只读模式</a></li></ul></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div></div></div>
+    <script src="/assets/js/app.bc6c5d67.js" defer></script><script src="/assets/js/3.a456f2bd.js" defer></script><script src="/assets/js/2.cf00b186.js" defer></script><script src="/assets/js/1.47b6a218.js" defer></script><script src="/assets/js/119.2b9f37fa.js" defer></script>
+  </body>
+</html>

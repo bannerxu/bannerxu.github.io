@@ -1,0 +1,3 @@
+Sitemap: http://blog.xuguoliang.top/sitemap.xml
+
+User-agent: *

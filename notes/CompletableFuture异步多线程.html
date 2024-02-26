@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>CompletableFuture异步多线程 | banner の blog</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    <link rel="icon" href="/img/logo.png">
+    <script charset="utf-8" src="/js/a.js"></script>
+    <meta name="description" content="不要在该奋斗的年纪选择安逸">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="keywords" content="blog,java,开发,教程,bannerxu,banner の blog">
+    
+    <link rel="preload" href="/assets/css/0.styles.7a38ff56.css" as="style"><link rel="preload" href="/assets/js/app.bc6c5d67.js" as="script"><link rel="preload" href="/assets/js/3.a456f2bd.js" as="script"><link rel="preload" href="/assets/js/2.cf00b186.js" as="script"><link rel="preload" href="/assets/js/1.47b6a218.js" as="script"><link rel="preload" href="/assets/js/48.a28cb8b2.js" as="script"><link rel="prefetch" href="/assets/js/10.20bc9341.js"><link rel="prefetch" href="/assets/js/100.34269883.js"><link rel="prefetch" href="/assets/js/101.aeb3fcb9.js"><link rel="prefetch" href="/assets/js/102.0fe7d3ec.js"><link rel="prefetch" href="/assets/js/103.1fe73087.js"><link rel="prefetch" href="/assets/js/104.06b97ffd.js"><link rel="prefetch" href="/assets/js/105.91ac2350.js"><link rel="prefetch" href="/assets/js/106.143abb9c.js"><link rel="prefetch" href="/assets/js/107.d4bebff8.js"><link rel="prefetch" href="/assets/js/108.0477c2d3.js"><link rel="prefetch" href="/assets/js/109.5236242e.js"><link rel="prefetch" href="/assets/js/110.95fb4e71.js"><link rel="prefetch" href="/assets/js/111.ebb939df.js"><link rel="prefetch" href="/assets/js/112.b2b78a7f.js"><link rel="prefetch" href="/assets/js/113.149b8840.js"><link rel="prefetch" href="/assets/js/114.ab6c6fda.js"><link rel="prefetch" href="/assets/js/115.0f0d7ee1.js"><link rel="prefetch" href="/assets/js/116.09a1516a.js"><link rel="prefetch" href="/assets/js/117.b09d2db7.js"><link rel="prefetch" href="/assets/js/118.c7af8c4b.js"><link rel="prefetch" href="/assets/js/119.2b9f37fa.js"><link rel="prefetch" href="/assets/js/120.2903c68f.js"><link rel="prefetch" href="/assets/js/121.f9002742.js"><link rel="prefetch" href="/assets/js/122.bcef1b90.js"><link rel="prefetch" href="/assets/js/123.6a752a0d.js"><link rel="prefetch" href="/assets/js/124.505d0e9e.js"><link rel="prefetch" href="/assets/js/125.4e9233c2.js"><link rel="prefetch" href="/assets/js/126.363ea7f1.js"><link rel="prefetch" href="/assets/js/13.6878694d.js"><link rel="prefetch" href="/assets/js/14.6d9fcfc4.js"><link rel="prefetch" href="/assets/js/15.34d8559d.js"><link rel="prefetch" href="/assets/js/16.ba04a9ec.js"><link rel="prefetch" href="/assets/js/17.1847ba81.js"><link rel="prefetch" href="/assets/js/18.dd9d6e0b.js"><link rel="prefetch" href="/assets/js/19.e3b20b84.js"><link rel="prefetch" href="/assets/js/20.8a7bcf6a.js"><link rel="prefetch" href="/assets/js/21.0c1fd697.js"><link rel="prefetch" href="/assets/js/22.c9bd8a17.js"><link rel="prefetch" href="/assets/js/23.835aed3f.js"><link rel="prefetch" href="/assets/js/24.080971d9.js"><link rel="prefetch" href="/assets/js/25.0528c674.js"><link rel="prefetch" href="/assets/js/26.9060164c.js"><link rel="prefetch" href="/assets/js/27.77ac549f.js"><link rel="prefetch" href="/assets/js/28.00bc8f47.js"><link rel="prefetch" href="/assets/js/29.97cf9cfc.js"><link rel="prefetch" href="/assets/js/30.701ca964.js"><link rel="prefetch" href="/assets/js/31.eae39d72.js"><link rel="prefetch" href="/assets/js/32.aace529a.js"><link rel="prefetch" href="/assets/js/33.8b83ae59.js"><link rel="prefetch" href="/assets/js/34.af82ce09.js"><link rel="prefetch" href="/assets/js/35.36b65ab0.js"><link rel="prefetch" href="/assets/js/36.771a242a.js"><link rel="prefetch" href="/assets/js/37.bf247f60.js"><link rel="prefetch" href="/assets/js/38.b1172be9.js"><link rel="prefetch" href="/assets/js/39.ece9b754.js"><link rel="prefetch" href="/assets/js/4.51aa7a44.js"><link rel="prefetch" href="/assets/js/40.1b4efedb.js"><link rel="prefetch" href="/assets/js/41.4529eb29.js"><link rel="prefetch" href="/assets/js/42.58e668b8.js"><link rel="prefetch" href="/assets/js/43.808738bf.js"><link rel="prefetch" href="/assets/js/44.f6f455b6.js"><link rel="prefetch" href="/assets/js/45.562d34b2.js"><link rel="prefetch" href="/assets/js/46.f8a78fe5.js"><link rel="prefetch" href="/assets/js/47.432a4e33.js"><link rel="prefetch" href="/assets/js/49.77399650.js"><link rel="prefetch" href="/assets/js/5.713e1257.js"><link rel="prefetch" href="/assets/js/50.c003cd65.js"><link rel="prefetch" href="/assets/js/51.3384ef2f.js"><link rel="prefetch" href="/assets/js/52.94735bdf.js"><link rel="prefetch" href="/assets/js/53.eee1705b.js"><link rel="prefetch" href="/assets/js/54.7c0d9eb9.js"><link rel="prefetch" href="/assets/js/55.27a9fa2f.js"><link rel="prefetch" href="/assets/js/56.d0ec1f63.js"><link rel="prefetch" href="/assets/js/57.8a383a47.js"><link rel="prefetch" href="/assets/js/58.8c7778d0.js"><link rel="prefetch" href="/assets/js/59.d1ea1cf7.js"><link rel="prefetch" href="/assets/js/6.7a632a43.js"><link rel="prefetch" href="/assets/js/60.15467e73.js"><link rel="prefetch" href="/assets/js/61.3cf25ddd.js"><link rel="prefetch" href="/assets/js/62.f6cfd209.js"><link rel="prefetch" href="/assets/js/63.544cf278.js"><link rel="prefetch" href="/assets/js/64.9081461f.js"><link rel="prefetch" href="/assets/js/65.691b04ae.js"><link rel="prefetch" href="/assets/js/66.efb0712c.js"><link rel="prefetch" href="/assets/js/67.83fee0e5.js"><link rel="prefetch" href="/assets/js/68.cacea8bf.js"><link rel="prefetch" href="/assets/js/69.13c28181.js"><link rel="prefetch" href="/assets/js/7.e9df25d1.js"><link rel="prefetch" href="/assets/js/70.596d17c1.js"><link rel="prefetch" href="/assets/js/71.7c007370.js"><link rel="prefetch" href="/assets/js/72.cfebe2f3.js"><link rel="prefetch" href="/assets/js/73.c860ca63.js"><link rel="prefetch" href="/assets/js/74.2017c3d5.js"><link rel="prefetch" href="/assets/js/75.2b798e05.js"><link rel="prefetch" href="/assets/js/76.495e99ad.js"><link rel="prefetch" href="/assets/js/77.a4ed9896.js"><link rel="prefetch" href="/assets/js/78.8b806223.js"><link rel="prefetch" href="/assets/js/79.2236a076.js"><link rel="prefetch" href="/assets/js/8.6697ddbf.js"><link rel="prefetch" href="/assets/js/80.f2695c70.js"><link rel="prefetch" href="/assets/js/81.a450429b.js"><link rel="prefetch" href="/assets/js/82.e0e3eef7.js"><link rel="prefetch" href="/assets/js/83.fb63f0db.js"><link rel="prefetch" href="/assets/js/84.9bb8f9b3.js"><link rel="prefetch" href="/assets/js/85.e3a8c35e.js"><link rel="prefetch" href="/assets/js/86.af2675e7.js"><link rel="prefetch" href="/assets/js/87.b14222ad.js"><link rel="prefetch" href="/assets/js/88.1bb3d30b.js"><link rel="prefetch" href="/assets/js/89.5457895f.js"><link rel="prefetch" href="/assets/js/9.17811c13.js"><link rel="prefetch" href="/assets/js/90.d9cb6a1b.js"><link rel="prefetch" href="/assets/js/91.85c6325a.js"><link rel="prefetch" href="/assets/js/92.42e8c404.js"><link rel="prefetch" href="/assets/js/93.a3936f36.js"><link rel="prefetch" href="/assets/js/94.861d122e.js"><link rel="prefetch" href="/assets/js/95.f6bc410b.js"><link rel="prefetch" href="/assets/js/96.ccc6f4a3.js"><link rel="prefetch" href="/assets/js/97.3eb55cf7.js"><link rel="prefetch" href="/assets/js/98.71442dfe.js"><link rel="prefetch" href="/assets/js/99.2975bc53.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.dd6847c6.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.7a38ff56.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-dad8a512><div data-v-dad8a512><div id="loader-wrapper" class="loading-wrapper" data-v-d48f4d20 data-v-dad8a512 data-v-dad8a512><div class="loader-main" data-v-d48f4d20><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div></div> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-64685f0e data-v-dad8a512 data-v-dad8a512><h3 class="title" style="display:none;" data-v-64685f0e data-v-64685f0e>banner の blog</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-64685f0e data-v-64685f0e><input type="password" value="" data-v-64685f0e> <span data-v-64685f0e>Konck! Knock!</span> <button data-v-64685f0e>OK</button></label> <div class="footer" style="display:none;" data-v-64685f0e data-v-64685f0e><span data-v-64685f0e><i class="iconfont reco-theme" data-v-64685f0e></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-64685f0e>vuePress-theme-reco</a></span> <span data-v-64685f0e><i class="iconfont reco-copyright" data-v-64685f0e></i> <a data-v-64685f0e><span data-v-64685f0e>banner</span>
+            
+          <span data-v-64685f0e>2017 - </span>
+          2024
+        </a></span></div></div> <div class="hide" data-v-dad8a512><header class="navbar" data-v-dad8a512><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="banner の blog" class="logo"> <span class="site-name">banner の blog</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      分类
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/SpringBoot/" class="nav-link"><i class="iconfont undefined"></i>
+  SpringBoot
+</a></li><li class="dropdown-item"><!----> <a href="/categories/爬虫/" class="nav-link"><i class="iconfont undefined"></i>
+  爬虫
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Java/" class="nav-link"><i class="iconfont undefined"></i>
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/categories/加密/" class="nav-link"><i class="iconfont undefined"></i>
+  加密
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Mac/" class="nav-link"><i class="iconfont undefined"></i>
+  Mac
+</a></li><li class="dropdown-item"><!----> <a href="/categories/设计模式/" class="nav-link"><i class="iconfont undefined"></i>
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/categories/工具/" class="nav-link"><i class="iconfont undefined"></i>
+  工具
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Docker/" class="nav-link"><i class="iconfont undefined"></i>
+  Docker
+</a></li><li class="dropdown-item"><!----> <a href="/categories/数据库/" class="nav-link"><i class="iconfont undefined"></i>
+  数据库
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Linux/" class="nav-link"><i class="iconfont undefined"></i>
+  Linux
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Spring/" class="nav-link"><i class="iconfont undefined"></i>
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/categories/elasticsearch/" class="nav-link"><i class="iconfont undefined"></i>
+  elasticsearch
+</a></li><li class="dropdown-item"><!----> <a href="/categories/nginx/" class="nav-link"><i class="iconfont undefined"></i>
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/categories/MQ/" class="nav-link"><i class="iconfont undefined"></i>
+  MQ
+</a></li><li class="dropdown-item"><!----> <a href="/categories/SpringCloudAlibaba/" class="nav-link"><i class="iconfont undefined"></i>
+  SpringCloudAlibaba
+</a></li><li class="dropdown-item"><!----> <a href="/categories/微服务/" class="nav-link"><i class="iconfont undefined"></i>
+  微服务
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间线
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-menu"></i>
+      专题
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/notes/docker/" class="nav-link"><i class="iconfont icon-Docker"></i>
+  Docker系列
+</a></li><li class="dropdown-item"><!----> <a href="/notes/springcloudalibaba/" class="nav-link"><i class="iconfont icon-bxl-spring-boot"></i>
+  SpringCloudAlibaba系列
+</a></li><li class="dropdown-item"><!----> <a href="/notes/rabbitmq/" class="nav-link"><i class="iconfont icon-rabbitmq"></i>
+  RabbitMQ系列
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-menu"></i>
+      工具箱
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>面试题</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://javaguide.cn" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  JavaGuide
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://github.com/Snailclimb/JavaGuide" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  JavaGuide-GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li><li class="dropdown-item"><h4>在线编辑</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://tinypng.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  图片压缩
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://www.json.cn/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  json格式化
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li><li class="dropdown-item"><h4>技术网站</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://spring.io/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Spring
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://docs.oracle.com/javase/8/docs/api/index.html" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Java SE API Documentation 
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://stackoverflow.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  StackOverflow
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://leetcode-cn.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  LeetCode
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://www.linuxcool.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Linux命令大全
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://www.redis.net.cn/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Redis中文网
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li><li class="dropdown-item"><h4>免费图片</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://www.pexels.com/zh-cn/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Pexels
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li><li class="dropdown-item"><h4>在线工具</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="http://ocrmaker.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  在线文字识别
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://www.bejson.com/othertools/cron/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  在线cron
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://www.dute.org/nginx-config-formatter" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Nginx格式化
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li></ul></div></div><div class="nav-item"><a href="/about/CV.html" class="nav-link"><i class="iconfont icon-huojian"></i>
+  简历
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-dad8a512></div> <aside class="sidebar" data-v-dad8a512><div class="personal-info-wrapper" data-v-ca798c94 data-v-dad8a512><img src="/img/logo.png" alt="author-avatar" class="personal-img" data-v-ca798c94> <h3 class="name" data-v-ca798c94>
+    banner
+  </h3> <div class="num" data-v-ca798c94><div data-v-ca798c94><h3 data-v-ca798c94>84</h3> <h6 data-v-ca798c94>Article</h6></div> <div data-v-ca798c94><h3 data-v-ca798c94>57</h3> <h6 data-v-ca798c94>Tag</h6></div></div> <hr data-v-ca798c94></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      分类
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/SpringBoot/" class="nav-link"><i class="iconfont undefined"></i>
+  SpringBoot
+</a></li><li class="dropdown-item"><!----> <a href="/categories/爬虫/" class="nav-link"><i class="iconfont undefined"></i>
+  爬虫
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Java/" class="nav-link"><i class="iconfont undefined"></i>
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/categories/加密/" class="nav-link"><i class="iconfont undefined"></i>
+  加密
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Mac/" class="nav-link"><i class="iconfont undefined"></i>
+  Mac
+</a></li><li class="dropdown-item"><!----> <a href="/categories/设计模式/" class="nav-link"><i class="iconfont undefined"></i>
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/categories/工具/" class="nav-link"><i class="iconfont undefined"></i>
+  工具
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Docker/" class="nav-link"><i class="iconfont undefined"></i>
+  Docker
+</a></li><li class="dropdown-item"><!----> <a href="/categories/数据库/" class="nav-link"><i class="iconfont undefined"></i>
+  数据库
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Linux/" class="nav-link"><i class="iconfont undefined"></i>
+  Linux
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Spring/" class="nav-link"><i class="iconfont undefined"></i>
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/categories/elasticsearch/" class="nav-link"><i class="iconfont undefined"></i>
+  elasticsearch
+</a></li><li class="dropdown-item"><!----> <a href="/categories/nginx/" class="nav-link"><i class="iconfont undefined"></i>
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/categories/MQ/" class="nav-link"><i class="iconfont undefined"></i>
+  MQ
+</a></li><li class="dropdown-item"><!----> <a href="/categories/SpringCloudAlibaba/" class="nav-link"><i class="iconfont undefined"></i>
+  SpringCloudAlibaba
+</a></li><li class="dropdown-item"><!----> <a href="/categories/微服务/" class="nav-link"><i class="iconfont undefined"></i>
+  微服务
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间线
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-menu"></i>
+      专题
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/notes/docker/" class="nav-link"><i class="iconfont icon-Docker"></i>
+  Docker系列
+</a></li><li class="dropdown-item"><!----> <a href="/notes/springcloudalibaba/" class="nav-link"><i class="iconfont icon-bxl-spring-boot"></i>
+  SpringCloudAlibaba系列
+</a></li><li class="dropdown-item"><!----> <a href="/notes/rabbitmq/" class="nav-link"><i class="iconfont icon-rabbitmq"></i>
+  RabbitMQ系列
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-menu"></i>
+      工具箱
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>面试题</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://javaguide.cn" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  JavaGuide
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://github.com/Snailclimb/JavaGuide" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  JavaGuide-GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li><li class="dropdown-item"><h4>在线编辑</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://tinypng.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  图片压缩
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://www.json.cn/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  json格式化
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li><li class="dropdown-item"><h4>技术网站</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://spring.io/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Spring
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://docs.oracle.com/javase/8/docs/api/index.html" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Java SE API Documentation 
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://stackoverflow.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  StackOverflow
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://leetcode-cn.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  LeetCode
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://www.linuxcool.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Linux命令大全
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://www.redis.net.cn/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Redis中文网
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li><li class="dropdown-item"><h4>免费图片</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://www.pexels.com/zh-cn/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Pexels
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li><li class="dropdown-item"><h4>在线工具</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="http://ocrmaker.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  在线文字识别
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://www.bejson.com/othertools/cron/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  在线cron
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://www.dute.org/nginx-config-formatter" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  Nginx格式化
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li></ul></div></div><div class="nav-item"><a href="/about/CV.html" class="nav-link"><i class="iconfont icon-huojian"></i>
+  简历
+</a></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-64685f0e data-v-dad8a512><h3 class="title" style="display:none;" data-v-64685f0e data-v-64685f0e>CompletableFuture异步多线程</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-64685f0e data-v-64685f0e><input type="password" value="" data-v-64685f0e> <span data-v-64685f0e>Konck! Knock!</span> <button data-v-64685f0e>OK</button></label> <div class="footer" style="display:none;" data-v-64685f0e data-v-64685f0e><span data-v-64685f0e><i class="iconfont reco-theme" data-v-64685f0e></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-64685f0e>vuePress-theme-reco</a></span> <span data-v-64685f0e><i class="iconfont reco-copyright" data-v-64685f0e></i> <a data-v-64685f0e><span data-v-64685f0e>banner</span>
+            
+          <span data-v-64685f0e>2017 - </span>
+          2024
+        </a></span></div></div> <div data-v-dad8a512><main class="page"><div class="page-title" style="display:none;"><h1>CompletableFuture异步多线程</h1> <hr> <div data-v-aa64b9d0><i class="iconfont reco-account" data-v-aa64b9d0><span data-v-aa64b9d0>banner</span></i> <i class="iconfont reco-date" data-v-aa64b9d0><span data-v-aa64b9d0>2023-10-05</span></i> <!----> <i class="iconfont reco-tag tags" data-v-aa64b9d0><span class="tag-item" data-v-aa64b9d0>并发</span></i></div></div> <div class="theme-reco-content content__default" style="display:none;"><h2 id="一个示例回顾future"><a href="#一个示例回顾future" class="header-anchor">#</a> 一个示例回顾Future</h2> <p>一些业务场景我们需要使用多线程异步执行任务，加快任务执行速度。</p> <p>JDK5新增了<code>Future</code>接口，用于描述一个异步计算的结果。</p> <p>虽然 Future 以及相关使用方法提供了异步执行任务的能力，但是对于结果的获取却是很不方便，我们必须使用<code>Future.get()</code>的方式阻塞调用线程，或者使用轮询方式判断 <code>Future.isDone</code> 任务是否结束，再获取结果。</p> <p>这两种处理方式都不是很优雅，相关代码如下:</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Test  
+public void testFuture() throws ExecutionException, InterruptedException {  
+    ExecutorService executorService = Executors.newFixedThreadPool(5);  
+    Future&lt;String&gt; future = executorService.submit(() -&gt; {  
+        Thread.sleep(2000);  
+        return &quot;hello&quot;;  
+    });  
+    System.out.println(future.get());  
+    System.out.println(&quot;end&quot;);  
+}  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><p>与此同时，Future无法解决多个异步任务需要相互依赖的场景，简单点说就是，主线程需要等待子线程任务执行完毕之后在进行执行，这个时候你可能想到了<code>CountDownLatch</code>，没错确实可以解决，代码如下。</p> <p>这里定义两个Future，第一个通过用户id获取用户信息，第二个通过商品id获取商品信息。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Test  
+ public void testCountDownLatch() throws InterruptedException, ExecutionException {  
+     ExecutorService executorService = Executors.newFixedThreadPool(5);  
+     CountDownLatch downLatch = new CountDownLatch(2);  
+     long startTime = System.currentTimeMillis();  
+     Future&lt;String&gt; userFuture = executorService.submit(() -&gt; {  
+         //模拟查询商品耗时500毫秒  
+         Thread.sleep(500);  
+         downLatch.countDown();  
+         return &quot;用户A&quot;;  
+     });  
+
+     Future&lt;String&gt; goodsFuture = executorService.submit(() -&gt; {  
+         //模拟查询商品耗时500毫秒  
+         Thread.sleep(400);  
+         downLatch.countDown();  
+         return &quot;商品A&quot;;  
+     });  
+
+     downLatch.await();  
+     //模拟主程序耗时时间  
+     Thread.sleep(600);  
+     System.out.println(&quot;获取用户信息:&quot; + userFuture.get());  
+     System.out.println(&quot;获取商品信息:&quot; + goodsFuture.get());  
+     System.out.println(&quot;总共用时&quot; + (System.currentTimeMillis() - startTime) + &quot;ms&quot;);  
+
+ }  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br></div></div><p><strong>「运行结果」</strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>获取用户信息:用户A  
+获取商品信息:商品A  
+总共用时1110ms  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>从运行结果可以看出结果都已经获取，而且如果我们不用异步操作，执行时间应该是:<code>500+400+600 = 1500</code>，用异步操作后实际只用1110。</p> <p>但是Java8以后我不在认为这是一种优雅的解决方式，接下来来了解下<code>CompletableFuture</code>的使用。</p> <h2 id="通过completablefuture实现上面示例"><a href="#通过completablefuture实现上面示例" class="header-anchor">#</a> 通过CompletableFuture实现上面示例</h2> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Test  
+public void testCompletableInfo() throws InterruptedException, ExecutionException {  
+    long startTime = System.currentTimeMillis();  
+
+      //调用用户服务获取用户基本信息  
+      CompletableFuture&lt;String&gt; userFuture = CompletableFuture.supplyAsync(() -&gt;  
+              //模拟查询商品耗时500毫秒  
+      {  
+          try {  
+              Thread.sleep(500);  
+          } catch (InterruptedException e) {  
+              e.printStackTrace();  
+          }  
+          return &quot;用户A&quot;;  
+      });  
+
+      //调用商品服务获取商品基本信息  
+      CompletableFuture&lt;String&gt; goodsFuture = CompletableFuture.supplyAsync(() -&gt;  
+              //模拟查询商品耗时500毫秒  
+      {  
+          try {  
+              Thread.sleep(400);  
+          } catch (InterruptedException e) {  
+              e.printStackTrace();  
+          }  
+          return &quot;商品A&quot;;  
+      });  
+
+      System.out.println(&quot;获取用户信息:&quot; + userFuture.get());  
+      System.out.println(&quot;获取商品信息:&quot; + goodsFuture.get());  
+
+      //模拟主程序耗时时间  
+      Thread.sleep(600);  
+      System.out.println(&quot;总共用时&quot; + (System.currentTimeMillis() - startTime) + &quot;ms&quot;);  
+}  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br></div></div><p>运行结果</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>获取用户信息:用户A  
+获取商品信息:商品A  
+总共用时1112ms  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>通过<code>CompletableFuture</code>可以很轻松的实现<code>CountDownLatch</code>的功能，你以为这就结束了，远远不止，<code>CompletableFuture</code>比这要强多了。</p> <p><strong>比如可以实现</strong> ：任务1执行完了再执行任务2,甚至任务1执行的结果，作为任务2的入参数等等强大功能，下面就来学学<code>CompletableFuture</code>的API。</p> <h2 id="completablefuture创建方式"><a href="#completablefuture创建方式" class="header-anchor">#</a> CompletableFuture创建方式</h2> <h3 id="_1、常用的4种创建方式"><a href="#_1、常用的4种创建方式" class="header-anchor">#</a> 1、常用的4种创建方式</h3> <p><code>CompletableFuture</code>源码中有四个静态方法用来执行异步任务</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public static &lt;U&gt; CompletableFuture&lt;U&gt; supplyAsync(Supplier&lt;U&gt; supplier){..}  
+public static &lt;U&gt; CompletableFuture&lt;U&gt; supplyAsync(Supplier&lt;U&gt; supplier,Executor executor){..}  
+public static CompletableFuture&lt;Void&gt; runAsync(Runnable runnable){..}  
+public static CompletableFuture&lt;Void&gt; runAsync(Runnable runnable,Executor executor){..}  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>一般我们用上面的静态方法来创建<code>CompletableFuture</code>，这里也解释下他们的区别:</p> <ul><li><strong>「supplyAsync」</strong> 执行任务，支持返回值。</li> <li><strong>「runAsync」</strong> 执行任务，没有返回值。</li></ul> <p><strong>「supplyAsync方法」</strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>//使用默认内置线程池ForkJoinPool.commonPool()，根据supplier构建执行任务  
+public static &lt;U&gt; CompletableFuture&lt;U&gt; supplyAsync(Supplier&lt;U&gt; supplier)  
+//自定义线程，根据supplier构建执行任务  
+public static &lt;U&gt; CompletableFuture&lt;U&gt; supplyAsync(Supplier&lt;U&gt; supplier, Executor executor)  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p><strong>「runAsync方法」</strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>//使用默认内置线程池ForkJoinPool.commonPool()，根据runnable构建执行任务  
+public static CompletableFuture&lt;Void&gt; runAsync(Runnable runnable)   
+//自定义线程，根据runnable构建执行任务  
+public static CompletableFuture&lt;Void&gt; runAsync(Runnable runnable,  Executor executor)  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><h3 id="_2、结果获取的4种方式"><a href="#_2、结果获取的4种方式" class="header-anchor">#</a> 2、结果获取的4种方式</h3> <p>对于结果的获取<code>CompltableFuture</code>类提供了四种方式</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>//方式一  
+public T get()  
+//方式二  
+public T get(long timeout, TimeUnit unit)  
+//方式三  
+public T getNow(T valueIfAbsent)  
+//方式四  
+public T join()  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><p>说明：</p> <ul><li><strong>「get()和get(long timeout, TimeUnit unit)」</strong> =&gt; 在Future中就已经提供了，后者提供超时处理，如果在指定时间内未获取结果将抛出超时异常</li> <li><strong>「getNow」</strong> =&gt; 立即获取结果不阻塞，结果计算已完成将返回结果或计算过程中的异常，如果未计算完成将返回设定的valueIfAbsent值</li> <li><strong>「join」</strong> =&gt; 方法里不会抛出异常</li></ul> <p>示例：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Test  
+public void testCompletableGet() throws InterruptedException, ExecutionException {  
+
+    CompletableFuture&lt;String&gt; cp1 = CompletableFuture.supplyAsync(() -&gt; {  
+        try {  
+            Thread.sleep(1000);  
+        } catch (InterruptedException e) {  
+            e.printStackTrace();  
+        }  
+        return &quot;商品A&quot;;  
+    });  
+
+    // getNow方法测试   
+    System.out.println(cp1.getNow(&quot;商品B&quot;));  
+
+    //join方法测试   
+    CompletableFuture&lt;Integer&gt; cp2 = CompletableFuture.supplyAsync((() -&gt; 1 / 0));  
+    System.out.println(cp2.join());  
+   System.out.println(&quot;-----------------------------------------------------&quot;);  
+    //get方法测试  
+    CompletableFuture&lt;Integer&gt; cp3 = CompletableFuture.supplyAsync((() -&gt; 1 / 0));  
+    System.out.println(cp3.get());  
+}  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br></div></div><p><strong>「运行结果」</strong> ：</p> <ul><li>第一个执行结果为 <strong>「商品B」</strong> ，因为要先睡上1秒结果不能立即获取</li> <li>join方法获取结果方法里不会抛异常，但是执行结果会抛异常，抛出的异常为<code>CompletionException</code></li> <li>get方法获取结果方法里将抛出异常，执行结果抛出的异常为<code>ExecutionException</code></li></ul> <h2 id="异步回调方法"><a href="#异步回调方法" class="header-anchor">#</a> 异步回调方法</h2> <p><img src="https://image.xuguoliang.top/2023/10/05/640-YnSoWP.jpeg" alt="图片"></p> <h3 id="_1、thenrun-thenrunasync"><a href="#_1、thenrun-thenrunasync" class="header-anchor">#</a> 1、thenRun/thenRunAsync</h3> <p>通俗点讲就是，<strong>「做完第一个任务后，再做第二个任务,第二个任务也没有返回值」</strong> 。</p> <p>示例</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Test  
+public void testCompletableThenRunAsync() throws InterruptedException, ExecutionException {  
+    long startTime = System.currentTimeMillis();  
+      
+    CompletableFuture&lt;Void&gt; cp1 = CompletableFuture.runAsync(() -&gt; {  
+        try {  
+            //执行任务A  
+            Thread.sleep(600);  
+        } catch (InterruptedException e) {  
+            e.printStackTrace();  
+        }  
+
+    });  
+
+    CompletableFuture&lt;Void&gt; cp2 =  cp1.thenRun(() -&gt; {  
+        try {  
+            //执行任务B  
+            Thread.sleep(400);  
+        } catch (InterruptedException e) {  
+            e.printStackTrace();  
+        }  
+    });  
+
+    // get方法测试  
+    System.out.println(cp2.get());  
+
+    //模拟主程序耗时时间  
+    Thread.sleep(600);  
+    System.out.println(&quot;总共用时&quot; + (System.currentTimeMillis() - startTime) + &quot;ms&quot;);  
+}  
+  
+//运行结果    
+/**  
+ *  null  
+ *  总共用时1610ms  
+ */  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br></div></div><p><strong>「thenRun 和thenRunAsync有什么区别呢？」</strong></p> <p>如果你执行第一个任务的时候，传入了一个自定义线程池：</p> <ul><li>调用thenRun方法执行第二个任务时，则第二个任务和第一个任务是共用同一个线程池。</li> <li>调用<code>thenRunAsync</code>执行第二个任务时，则第一个任务使用的是你自己传入的线程池，第二个任务使用的是ForkJoin线程池。</li></ul> <p>说明: 后面介绍的<code>thenAccept</code>和<code>thenAcceptAsync</code>，<code>thenApply</code>和<code>thenApplyAsync</code>等，它们之间的区别也是这个。</p> <h3 id="_2、thenaccept-thenacceptasync"><a href="#_2、thenaccept-thenacceptasync" class="header-anchor">#</a> 2、thenAccept/thenAcceptAsync</h3> <p>第一个任务执行完成后，执行第二个回调方法任务，<strong>会将该任务的执行结果，作为入参</strong> ，传递到回调方法中，但是回调方法是没有返回值的。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>示例
+@Test  
+public void testCompletableThenAccept() throws ExecutionException, InterruptedException {  
+    long startTime = System.currentTimeMillis();  
+    CompletableFuture&lt;String&gt; cp1 = CompletableFuture.supplyAsync(() -&gt; {  
+        return &quot;dev&quot;;  
+
+    });  
+    CompletableFuture&lt;Void&gt; cp2 =  cp1.thenAccept((a) -&gt; {  
+        System.out.println(&quot;上一个任务的返回结果为: &quot; + a);  
+    });  
+   
+    cp2.get();  
+}  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><h3 id="_3、-thenapply-thenapplyasync"><a href="#_3、-thenapply-thenapplyasync" class="header-anchor">#</a> 3、 thenApply/thenApplyAsync</h3> <p>表示第一个任务执行完成后，执行第二个回调方法任务，会将该任务的执行结果，作为入参，传递到回调方法中，并且回调方法是有返回值的。</p> <p>示例</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Test  
+public void testCompletableThenApply() throws ExecutionException, InterruptedException {  
+    CompletableFuture&lt;String&gt; cp1 = CompletableFuture.supplyAsync(() -&gt; {  
+        return &quot;dev&quot;;  
+
+    }).thenApply((a) -&gt; {  
+        if(Objects.equals(a,&quot;dev&quot;)){  
+            return &quot;dev&quot;;  
+        }  
+        return &quot;prod&quot;;  
+    });  
+
+    System.out.println(&quot;当前环境为:&quot; + cp1.get());  
+
+    //输出: 当前环境为:dev  
+}  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><h2 id="异常回调"><a href="#异常回调" class="header-anchor">#</a> 异常回调</h2> <p>当<code>CompletableFuture</code>的任务不论是正常完成还是出现异常它都会调用 <strong>「whenComplete」</strong> 这回调函数。</p> <ul><li><strong>「正常完成」</strong> ：whenComplete返回结果和上级任务一致，异常为null；</li> <li><strong>「出现异常」</strong> ：whenComplete返回结果为null，异常为上级任务的异常；</li></ul> <p>即调用<code>get()</code>时，正常完成时就获取到结果，出现异常时就会抛出异常，需要你处理该异常。</p> <p>下面来看看示例</p> <h3 id="_1、只用whencomplete"><a href="#_1、只用whencomplete" class="header-anchor">#</a> 1、只用whenComplete</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Test  
+public void testCompletableWhenComplete() throws ExecutionException, InterruptedException {  
+    CompletableFuture&lt;Double&gt; future = CompletableFuture.supplyAsync(() -&gt; {  
+
+        if (Math.random() &lt; 0.5) {  
+            throw new RuntimeException(&quot;出错了&quot;);  
+        }  
+        System.out.println(&quot;正常结束&quot;);  
+        return 0.11;  
+
+    }).whenComplete((aDouble, throwable) -&gt; {  
+        if (aDouble == null) {  
+            System.out.println(&quot;whenComplete aDouble is null&quot;);  
+        } else {  
+            System.out.println(&quot;whenComplete aDouble is &quot; + aDouble);  
+        }  
+        if (throwable == null) {  
+            System.out.println(&quot;whenComplete throwable is null&quot;);  
+        } else {  
+            System.out.println(&quot;whenComplete throwable is &quot; + throwable.getMessage());  
+        }  
+    });  
+    System.out.println(&quot;最终返回的结果 = &quot; + future.get());  
+}  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br></div></div><p>正常完成，没有异常时：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>正常结束  
+whenComplete aDouble is 0.11  
+whenComplete throwable is null  
+最终返回的结果 = 0.11  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>出现异常时：get()会抛出异常</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>whenComplete aDouble is null  
+whenComplete throwable is java.lang.RuntimeException: 出错了  
+  
+java.util.concurrent.ExecutionException: java.lang.RuntimeException: 出错了  
+ at java.util.concurrent.CompletableFuture.reportGet(CompletableFuture.java:357)  
+ at java.util.concurrent.CompletableFuture.get(CompletableFuture.java:1895)  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><h3 id="_2、whencomplete-exceptionally示例"><a href="#_2、whencomplete-exceptionally示例" class="header-anchor">#</a> 2、whenComplete + exceptionally示例</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Test  
+public void testWhenCompleteExceptionally() throws ExecutionException, InterruptedException {  
+    CompletableFuture&lt;Double&gt; future = CompletableFuture.supplyAsync(() -&gt; {  
+        if (Math.random() &lt; 0.5) {  
+            throw new RuntimeException(&quot;出错了&quot;);  
+        }  
+        System.out.println(&quot;正常结束&quot;);  
+        return 0.11;  
+
+    }).whenComplete((aDouble, throwable) -&gt; {  
+        if (aDouble == null) {  
+            System.out.println(&quot;whenComplete aDouble is null&quot;);  
+        } else {  
+            System.out.println(&quot;whenComplete aDouble is &quot; + aDouble);  
+        }  
+        if (throwable == null) {  
+            System.out.println(&quot;whenComplete throwable is null&quot;);  
+        } else {  
+            System.out.println(&quot;whenComplete throwable is &quot; + throwable.getMessage());  
+        }  
+    }).exceptionally((throwable) -&gt; {  
+        System.out.println(&quot;exceptionally中异常：&quot; + throwable.getMessage());  
+        return 0.0;  
+    });  
+
+    System.out.println(&quot;最终返回的结果 = &quot; + future.get());  
+}  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br></div></div><p>当出现异常时，<code>exceptionally</code>中会捕获该异常，给出默认返回值0.0。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>whenComplete aDouble is null  
+whenComplete throwable is java.lang.RuntimeException: 出错了  
+exceptionally中异常：java.lang.RuntimeException: 出错了  
+最终返回的结果 = 0.0  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><h2 id="多任务组合回调"><a href="#多任务组合回调" class="header-anchor">#</a> 多任务组合回调</h2> <p><img src="https://image.xuguoliang.top/2023/10/05/640-20231005141849543-2PB7Po.jpeg" alt="图片"></p> <h4 id="_1、and组合关系"><a href="#_1、and组合关系" class="header-anchor">#</a> 1、AND组合关系</h4> <p><code>thenCombine</code> / <code>thenAcceptBoth</code> / <code>runAfterBoth</code>都表示：<strong>「当任务一和任务二都完成再执行任务三」</strong> 。</p> <p>区别在于：</p> <ul><li><strong>「runAfterBoth」</strong> 不会把执行结果当做方法入参，且没有返回值</li> <li><strong>「thenAcceptBoth」</strong> : 会将两个任务的执行结果作为方法入参，传递到指定方法中，且无返回值</li> <li><strong>「thenCombine」</strong> ：会将两个任务的执行结果作为方法入参，传递到指定方法中，且有返回值</li></ul> <p>示例</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Test  
+public void testCompletableThenCombine() throws ExecutionException, InterruptedException {  
+    //创建线程池  
+    ExecutorService executorService = Executors.newFixedThreadPool(10);  
+    //开启异步任务1  
+    CompletableFuture&lt;Integer&gt; task = CompletableFuture.supplyAsync(() -&gt; {  
+        System.out.println(&quot;异步任务1，当前线程是：&quot; + Thread.currentThread().getId());  
+        int result = 1 + 1;  
+        System.out.println(&quot;异步任务1结束&quot;);  
+        return result;  
+    }, executorService);  
+
+    //开启异步任务2  
+    CompletableFuture&lt;Integer&gt; task2 = CompletableFuture.supplyAsync(() -&gt; {  
+        System.out.println(&quot;异步任务2，当前线程是：&quot; + Thread.currentThread().getId());  
+        int result = 1 + 1;  
+        System.out.println(&quot;异步任务2结束&quot;);  
+        return result;  
+    }, executorService);  
+
+    //任务组合  
+    CompletableFuture&lt;Integer&gt; task3 = task.thenCombineAsync(task2, (f1, f2) -&gt; {  
+        System.out.println(&quot;执行任务3，当前线程是：&quot; + Thread.currentThread().getId());  
+        System.out.println(&quot;任务1返回值：&quot; + f1);  
+        System.out.println(&quot;任务2返回值：&quot; + f2);  
+        return f1 + f2;  
+    }, executorService);  
+
+    Integer res = task3.get();  
+    System.out.println(&quot;最终结果：&quot; + res);  
+}  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br></div></div><p><strong>「运行结果」</strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>异步任务1，当前线程是：17  
+异步任务1结束  
+异步任务2，当前线程是：18  
+异步任务2结束  
+执行任务3，当前线程是：19  
+任务1返回值：2  
+任务2返回值：2  
+最终结果：4  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h4 id="_2、or组合关系"><a href="#_2、or组合关系" class="header-anchor">#</a> 2、OR组合关系</h4> <p><code>applyToEither</code> / <code>acceptEither</code> / <code>runAfterEither</code> 都表示：<strong>「两个任务，只要有一个任务完成，就执行任务三」</strong> 。</p> <p>区别在于：</p> <ul><li><strong>「runAfterEither」</strong> ：不会把执行结果当做方法入参，且没有返回值</li> <li><strong>「acceptEither」</strong> : 会将已经执行完成的任务，作为方法入参，传递到指定方法中，且无返回值</li> <li><strong>「applyToEither」</strong> ：会将已经执行完成的任务，作为方法入参，传递到指定方法中，且有返回值</li></ul> <p>示例</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Test  
+public void testCompletableEitherAsync() {  
+    //创建线程池  
+    ExecutorService executorService = Executors.newFixedThreadPool(10);  
+    //开启异步任务1  
+    CompletableFuture&lt;Integer&gt; task = CompletableFuture.supplyAsync(() -&gt; {  
+        System.out.println(&quot;异步任务1，当前线程是：&quot; + Thread.currentThread().getId());  
+
+        int result = 1 + 1;  
+        System.out.println(&quot;异步任务1结束&quot;);  
+        return result;  
+    }, executorService);  
+
+    //开启异步任务2  
+    CompletableFuture&lt;Integer&gt; task2 = CompletableFuture.supplyAsync(() -&gt; {  
+        System.out.println(&quot;异步任务2，当前线程是：&quot; + Thread.currentThread().getId());  
+        int result = 1 + 2;  
+        try {  
+            Thread.sleep(3000);  
+        } catch (InterruptedException e) {  
+            e.printStackTrace();  
+        }  
+        System.out.println(&quot;异步任务2结束&quot;);  
+        return result;  
+    }, executorService);  
+
+    //任务组合  
+    task.acceptEitherAsync(task2, (res) -&gt; {  
+        System.out.println(&quot;执行任务3，当前线程是：&quot; + Thread.currentThread().getId());  
+        System.out.println(&quot;上一个任务的结果为：&quot;+res);  
+    }, executorService);  
+}  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br></div></div><p>运行结果</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>//通过结果可以看出，异步任务2都没有执行结束，任务3获取的也是1的执行结果  
+异步任务1，当前线程是：17  
+异步任务1结束  
+异步任务2，当前线程是：18  
+执行任务3，当前线程是：19  
+上一个任务的结果为：2  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>注意</p> <p>如果把上面的核心线程数改为1也就是</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>ExecutorService executorService = Executors.newFixedThreadPool(1);  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>运行结果就是下面的了，会发现根本没有执行任务3，显然是任务3直接被丢弃了。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>异步任务1，当前线程是：17  
+异步任务1结束  
+异步任务2，当前线程是：17  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><h4 id="_3、多任务组合"><a href="#_3、多任务组合" class="header-anchor">#</a> 3、多任务组合</h4> <ul><li><strong>「allOf」</strong> ：等待所有任务完成</li> <li><strong>「anyOf」</strong> ：只要有一个任务完成</li></ul> <p>示例</p> <p><strong>allOf：等待所有任务完成</strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Test  
+public void testCompletableAallOf() throws ExecutionException, InterruptedException {  
+    //创建线程池  
+    ExecutorService executorService = Executors.newFixedThreadPool(10);  
+    //开启异步任务1  
+    CompletableFuture&lt;Integer&gt; task = CompletableFuture.supplyAsync(() -&gt; {  
+        System.out.println(&quot;异步任务1，当前线程是：&quot; + Thread.currentThread().getId());  
+        int result = 1 + 1;  
+        System.out.println(&quot;异步任务1结束&quot;);  
+        return result;  
+    }, executorService);  
+
+    //开启异步任务2  
+    CompletableFuture&lt;Integer&gt; task2 = CompletableFuture.supplyAsync(() -&gt; {  
+        System.out.println(&quot;异步任务2，当前线程是：&quot; + Thread.currentThread().getId());  
+        int result = 1 + 2;  
+        try {  
+            Thread.sleep(3000);  
+        } catch (InterruptedException e) {  
+            e.printStackTrace();  
+        }  
+        System.out.println(&quot;异步任务2结束&quot;);  
+        return result;  
+    }, executorService);  
+
+    //开启异步任务3  
+    CompletableFuture&lt;Integer&gt; task3 = CompletableFuture.supplyAsync(() -&gt; {  
+        System.out.println(&quot;异步任务3，当前线程是：&quot; + Thread.currentThread().getId());  
+        int result = 1 + 3;  
+        try {  
+            Thread.sleep(4000);  
+        } catch (InterruptedException e) {  
+            e.printStackTrace();  
+        }  
+        System.out.println(&quot;异步任务3结束&quot;);  
+        return result;  
+    }, executorService);  
+
+    //任务组合  
+    CompletableFuture&lt;Void&gt; allOf = CompletableFuture.allOf(task, task2, task3);  
+
+    //等待所有任务完成  
+    allOf.get();  
+    //获取任务的返回结果  
+    System.out.println(&quot;task结果为：&quot; + task.get());  
+    System.out.println(&quot;task2结果为：&quot; + task2.get());  
+    System.out.println(&quot;task3结果为：&quot; + task3.get());  
+}  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br></div></div><p><strong>anyOf: 只要有一个任务完成</strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Test  
+public void testCompletableAnyOf() throws ExecutionException, InterruptedException {  
+    //创建线程池  
+    ExecutorService executorService = Executors.newFixedThreadPool(10);  
+    //开启异步任务1  
+    CompletableFuture&lt;Integer&gt; task = CompletableFuture.supplyAsync(() -&gt; {  
+        int result = 1 + 1;  
+        return result;  
+    }, executorService);  
+
+    //开启异步任务2  
+    CompletableFuture&lt;Integer&gt; task2 = CompletableFuture.supplyAsync(() -&gt; {  
+        int result = 1 + 2;  
+        return result;  
+    }, executorService);  
+
+    //开启异步任务3  
+    CompletableFuture&lt;Integer&gt; task3 = CompletableFuture.supplyAsync(() -&gt; {  
+        int result = 1 + 3;  
+        return result;  
+    }, executorService);  
+
+    //任务组合  
+    CompletableFuture&lt;Object&gt; anyOf = CompletableFuture.anyOf(task, task2, task3);  
+    //只要有一个有任务完成  
+    Object o = anyOf.get();  
+    System.out.println(&quot;完成的任务的结果：&quot; + o);  
+}  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br></div></div><h2 id="completablefuture使用有哪些注意点"><a href="#completablefuture使用有哪些注意点" class="header-anchor">#</a> CompletableFuture使用有哪些注意点</h2> <p><img src="https://image.xuguoliang.top/2023/10/05/640-20231005141849618-jbR7kt.jpeg" alt="图片"></p> <p><code>CompletableFuture</code> 使我们的异步编程更加便利的、代码更加优雅的同时，我们也要关注下它，使用的一些注意点。</p> <h4 id="_1、future需要获取返回值-才能获取异常信息"><a href="#_1、future需要获取返回值-才能获取异常信息" class="header-anchor">#</a> 1、Future需要获取返回值，才能获取异常信息</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Test  
+public void testWhenCompleteExceptionally() {  
+    CompletableFuture&lt;Double&gt; future = CompletableFuture.supplyAsync(() -&gt; {  
+        if (1 == 1) {  
+            throw new RuntimeException(&quot;出错了&quot;);  
+        }  
+        return 0.11;  
+    });  
+
+    //如果不加 get()方法这一行，看不到异常信息  
+    //future.get();  
+}  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><p>Future需要获取返回值，才能获取到异常信息。如果不加 <code>get()</code>/<code>join()</code>方法，看不到异常信息。</p> <p>小伙伴们使用的时候，注意一下哈,考虑是否加<code>try...catch...</code>或者使用<code>exceptionally</code>方法。</p> <h4 id="_2、completablefuture的get-方法是阻塞的"><a href="#_2、completablefuture的get-方法是阻塞的" class="header-anchor">#</a> 2、CompletableFuture的get()方法是阻塞的</h4> <p><code>CompletableFuture</code>的<code>get()</code>方法是阻塞的，如果使用它来获取异步调用的返回值，需要添加超时时间。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>//反例  
+ CompletableFuture.get();  
+//正例  
+CompletableFuture.get(5, TimeUnit.SECONDS);  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><h4 id="_3、不建议使用默认线程池"><a href="#_3、不建议使用默认线程池" class="header-anchor">#</a> 3、不建议使用默认线程池</h4> <p><code>CompletableFuture</code>代码中又使用了默认的 <strong>「ForkJoin线程池」</strong> ，处理的线程个数是电脑 <strong>「CPU核数-1」</strong> 。在大量请求过来的时候，处理逻辑复杂的话，响应会很慢。一般建议使用自定义线程池，优化线程池配置参数。</p> <h4 id="_4、自定义线程池时-注意饱和策略"><a href="#_4、自定义线程池时-注意饱和策略" class="header-anchor">#</a> 4、自定义线程池时，注意饱和策略</h4> <p><code>CompletableFuture</code>的get()方法是阻塞的，我们一般建议使用<code>future.get(5, TimeUnit.SECONDS)</code>。并且一般建议使用自定义线程池。</p> <p>但是如果线程池拒绝策略是<code>DiscardPolicy</code>或者<code>DiscardOldestPolicy</code>，当线程池饱和时，会直接丢弃任务，不会抛弃异常。因此建议，<code>CompletableFuture</code>线程池策略最好使用<code>AbortPolicy</code>，然后耗时的异步线程，做好线程池隔离哈。</p></div> <footer class="page-edit" style="display:none;"><!----> <div class="last-updated"><span class="prefix">Last Updated: </span> <span class="time">2/26/2024, 11:21:23 AM</span></div></footer> <!----> <!----> <ul class="side-bar sub-sidebar-wrapper" style="width:12rem;" data-v-40a3448a><li class="level-2" data-v-40a3448a><a href="/notes/CompletableFuture%E5%BC%82%E6%AD%A5%E5%A4%9A%E7%BA%BF%E7%A8%8B.html#一个示例回顾future" class="sidebar-link" data-v-40a3448a>一个示例回顾Future</a></li><li class="level-2" data-v-40a3448a><a href="/notes/CompletableFuture%E5%BC%82%E6%AD%A5%E5%A4%9A%E7%BA%BF%E7%A8%8B.html#通过completablefuture实现上面示例" class="sidebar-link" data-v-40a3448a>通过CompletableFuture实现上面示例</a></li><li class="level-2" data-v-40a3448a><a href="/notes/CompletableFuture%E5%BC%82%E6%AD%A5%E5%A4%9A%E7%BA%BF%E7%A8%8B.html#completablefuture创建方式" class="sidebar-link" data-v-40a3448a>CompletableFuture创建方式</a></li><li class="level-3" data-v-40a3448a><a href="/notes/CompletableFuture%E5%BC%82%E6%AD%A5%E5%A4%9A%E7%BA%BF%E7%A8%8B.html#_1、常用的4种创建方式" class="sidebar-link" data-v-40a3448a>1、常用的4种创建方式</a></li><li class="level-3" data-v-40a3448a><a href="/notes/CompletableFuture%E5%BC%82%E6%AD%A5%E5%A4%9A%E7%BA%BF%E7%A8%8B.html#_2、结果获取的4种方式" class="sidebar-link" data-v-40a3448a>2、结果获取的4种方式</a></li><li class="level-2" data-v-40a3448a><a href="/notes/CompletableFuture%E5%BC%82%E6%AD%A5%E5%A4%9A%E7%BA%BF%E7%A8%8B.html#异步回调方法" class="sidebar-link" data-v-40a3448a>异步回调方法</a></li><li class="level-3" data-v-40a3448a><a href="/notes/CompletableFuture%E5%BC%82%E6%AD%A5%E5%A4%9A%E7%BA%BF%E7%A8%8B.html#_1、thenrun-thenrunasync" class="sidebar-link" data-v-40a3448a>1、thenRun/thenRunAsync</a></li><li class="level-3" data-v-40a3448a><a href="/notes/CompletableFuture%E5%BC%82%E6%AD%A5%E5%A4%9A%E7%BA%BF%E7%A8%8B.html#_2、thenaccept-thenacceptasync" class="sidebar-link" data-v-40a3448a>2、thenAccept/thenAcceptAsync</a></li><li class="level-3" data-v-40a3448a><a href="/notes/CompletableFuture%E5%BC%82%E6%AD%A5%E5%A4%9A%E7%BA%BF%E7%A8%8B.html#_3、-thenapply-thenapplyasync" class="sidebar-link" data-v-40a3448a>3、 thenApply/thenApplyAsync</a></li><li class="level-2" data-v-40a3448a><a href="/notes/CompletableFuture%E5%BC%82%E6%AD%A5%E5%A4%9A%E7%BA%BF%E7%A8%8B.html#异常回调" class="sidebar-link" data-v-40a3448a>异常回调</a></li><li class="level-3" data-v-40a3448a><a href="/notes/CompletableFuture%E5%BC%82%E6%AD%A5%E5%A4%9A%E7%BA%BF%E7%A8%8B.html#_1、只用whencomplete" class="sidebar-link" data-v-40a3448a>1、只用whenComplete</a></li><li class="level-3" data-v-40a3448a><a href="/notes/CompletableFuture%E5%BC%82%E6%AD%A5%E5%A4%9A%E7%BA%BF%E7%A8%8B.html#_2、whencomplete-exceptionally示例" class="sidebar-link" data-v-40a3448a>2、whenComplete + exceptionally示例</a></li><li class="level-2" data-v-40a3448a><a href="/notes/CompletableFuture%E5%BC%82%E6%AD%A5%E5%A4%9A%E7%BA%BF%E7%A8%8B.html#多任务组合回调" class="sidebar-link" data-v-40a3448a>多任务组合回调</a></li><li class="level-2" data-v-40a3448a><a href="/notes/CompletableFuture%E5%BC%82%E6%AD%A5%E5%A4%9A%E7%BA%BF%E7%A8%8B.html#completablefuture使用有哪些注意点" class="sidebar-link" data-v-40a3448a>CompletableFuture使用有哪些注意点</a></li></ul></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div></div></div>
+    <script src="/assets/js/app.bc6c5d67.js" defer></script><script src="/assets/js/3.a456f2bd.js" defer></script><script src="/assets/js/2.cf00b186.js" defer></script><script src="/assets/js/1.47b6a218.js" defer></script><script src="/assets/js/48.a28cb8b2.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+@font-face {
+  font-family: "iconfont"; /* Project id  */
+  src: url('iconfont01.ttf?t=1635327760477') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont01" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-jianli:before {
+  content: "\e61c";
+}
+
+.icon-Docker:before {
+  content: "\e9f3";
+}
+
+.icon-rabbitmq:before {
+  content: "\ec75";
+}
+
+.icon-bxl-spring-boot:before {
+  content: "\e6fe";
+}
+
